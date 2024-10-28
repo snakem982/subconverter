@@ -93,10 +93,6 @@ jobs:
             artifact: subconverter_windows_amd64
             env: x86_64
             msystem: MINGW64
-          - arch: arm64
-            artifact: subconverter_windows_arm64
-            env: x86_64
-            msystem: MINGW64
     runs-on: windows-latest
     name: Windows ${{ matrix.arch }} Build
     defaults:
