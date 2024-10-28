@@ -128,7 +128,7 @@ jobs:
           path: subconverter/
       - name: Package Release
         if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-        run: Compress-Archive -Path subconverter -DestinationPath ${{ matrix.artifact }}.zip
+        run: 7z a -tzip ${{ matrix.artifact }}.zip subconverter/
       - name: Draft Release
         if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
         uses: softprops/action-gh-release@v2
