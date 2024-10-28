@@ -17,7 +17,7 @@ jobs:
       matrix:
         include:
           - arch: amd64
-            artifact: subconverter_linux_amd64
+            artifact: linux-amd64
             os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     name: Linux ${{ matrix.arch }} Build
@@ -38,12 +38,12 @@ jobs:
           path: subconverter/
       - name: Package Release
         if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-        run: tar czf ${{ matrix.artifact }}.tar.gz subconverter
+        run: zip ${{ matrix.artifact }}.zip subconverter
       - name: Draft Release
         if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ matrix.artifact }}.tar.gz
+          files: ${{ matrix.artifact }}.zip
           draft: true
 
   macos_build:
@@ -51,10 +51,10 @@ jobs:
       matrix:
         include:
           - arch: amd64
-            artifact: subconverter_darwin_amd64
+            artifact: darwin-amd64
             os: macos-latest
           - arch: arm64
-            artifact: subconverter_darwin_arm64
+            artifact: darwin-arm64
             os: macos-latest
     runs-on: ${{ matrix.os }}
     name: macOS ${{ matrix.arch }} Build
@@ -77,12 +77,12 @@ jobs:
           path: subconverter/
       - name: Package Release
         if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-        run: tar czf ${{ matrix.artifact }}.tar.gz subconverter
+        run: zip ${{ matrix.artifact }}.zip subconverter
       - name: Draft Release
         if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ matrix.artifact }}.tar.gz
+          files: ${{ matrix.artifact }}.zip
           draft: true
 
   windows_build:
@@ -90,7 +90,7 @@ jobs:
       matrix:
         include:
           - arch: amd64
-            artifact: subconverter_windows_amd64
+            artifact: windows-amd64
             env: x86_64
             msystem: MINGW64
     runs-on: windows-latest
@@ -128,10 +128,10 @@ jobs:
           path: subconverter/
       - name: Package Release
         if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
-        run: 7z a ${{ matrix.artifact }}.7z subconverter/
+        run: Compress-Archive -Path ${{ matrix.artifact }}.zip -DestinationPath subconverter
       - name: Draft Release
         if: ${{ github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/') }}
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ matrix.artifact }}.7z
+          files: ${{ matrix.artifact }}.zip
           draft: true
