@@ -50,12 +50,12 @@ jobs:
     strategy:
       matrix:
         include:
-          - arch: amd64
+          - arch: x86
             artifact: darwin-amd64
-            os: macos-latest
-          - arch: arm64
+            os: macos-13
+          - arch: arm
             artifact: darwin-arm64
-            os: macos-latest
+            os: macos-14
     runs-on: ${{ matrix.os }}
     name: macOS ${{ matrix.arch }} Build
     steps:
